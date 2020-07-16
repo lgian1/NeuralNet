@@ -34,8 +34,7 @@ class NeuralNet():
         self.layers[0].O = x
         for i in range(self.lenght - 1):
             for j in range(self.layers[i + 1].lenght):
-                self.layers[i + 1].I[j] = np.dot(self.layers[i].O, np.transpose(self.layers[i].weights)[j]) + \
-                                          self.layers[i + 1].b[j]
+                self.layers[i + 1].I[j] = np.dot(self.layers[i].O, np.transpose(self.layers[i].weights)[j]) + \self.layers[i + 1].b[j]
                 self.layers[i + 1].O[j] = sigmoid(self.layers[i + 1].I[j])
 
     def totError(self, x, y):
@@ -45,8 +44,7 @@ class NeuralNet():
 
     def backpropagation(self, x, y):
         self.feedfw(x)
-        self.layers[-1].dElayers = np.dot(np.subtract(self.layers[-1].O, y) / self.layers[-1].lenght,
-                                          Dsigmoid(self.layers[-1].I))
+        self.layers[-1].dElayers = np.dot(np.subtract(self.layers[-1].O, y) / self.layers[-1].lenght, Dsigmoid(self.layers[-1].I))
         for i in reversed(range(1, self.lenght)):
             self.layers[i].dElayers
 
