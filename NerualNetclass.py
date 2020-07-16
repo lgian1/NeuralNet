@@ -1,3 +1,14 @@
+import math as mt, numpy as np, matplotlib.pyplot as plt, random as rd
+
+
+def sigmoid(x):
+    return 1/(1+mt.exp(-x))
+
+
+def Dsigmoid(x):
+    return sigmoid(x)*(1-sigmoid(x))
+
+
 class Layer:
     def __init__(self, lenght):
         # self.nodes = [Node() for i in range(lenght)]
