@@ -7,6 +7,7 @@ class Layer:
         self.b = np.zeros(lenght)
         self.weights = []
         self.dElayers = []
+        self.Delta = []
         return
     
 class NeuralNet():
@@ -31,10 +32,12 @@ class NeuralNet():
         
     def backpropagation(self,x,y,lr):
         self.feedfw(x)
-        self.layers[-1].dElayers = np.dot(np.subtract(self.layers[-1].O,y)/self.layers[-1].lenght, Dsigmoid(self.layers[-1].I))
-        self.layers[-2].weights = self.layers[-2] - np.dot(lr,(np.dot(np.subtract(self.layers[-1].O,y),np.array(map(Dsigmoid,self.layers[-1].O))))/self.layers[-1].lenght)
-        for i in reversed(range(1,self.lenght)):
-            self.layers[i].dElayers = np.dot()
+        self.layers[-1].Delta = [ (self.layers[-1].O[i]*(1- self.layers[-1].O[i])*(self.layers[-1].O[i]-y[i])) for i in range (self.layers[-1].lenght)]
+        #self.layers[-1].Delta = np.dot(np.dot(self.layers[-1].O,np.subtract(1,self.layers[-1].O)),np.subtract(self.layers[-1].O,y))  np.multiply
+        for i in reversed(range (1,self.lenght)):
+            for n in range( self.layers[i+1]):
+                self.layers[i].weights[n] = np.subtract(self.layers[i].weights[n],lr*self.layers[i-1].O[n]*self.layers[i].Delta)
+            self.layers[i-1].Delta= [(self.layers[i-1].O[k]*(1-self.layers[i-1].O[k])*np.dot(self.layers[i].Delta,self.layers[i].weights[k])) for k in range( self.layers[i-1].lenght)]
             
     
     def debug(self):
