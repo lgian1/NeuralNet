@@ -26,34 +26,6 @@ class NeuralNet():
                 self.layers[i+1].O[j] = sigmoid(self.layers[i+1].I[j])
                 
     def totError(self,x,y):
-        self.feedfw(x)class Layer:
-    def __init__(self,length):
-        #self.nodes = [Node() for i in range(length)]
-        self.length = length
-        self.I = np.zeros(length)
-        self.O = np.zeros(length)
-        self.b = np.zeros(length)
-        self.weights = []
-        self.dElayers = []
-        self.Delta = []
-        return
-    
-class NeuralNet():
-    def __init__(self,X,Y,sizeH=[2]):
-        self.layers = [Layer(len(X[0]))] + [Layer(i) for i in sizeH] + [Layer(len(Y[0]))]
-        self.length = len(self.layers)
-        for i in range(self.length-1):
-            self.layers[i].weights = [[rd.random() for j in range(self.layers[i+1].length)] for k in range(self.layers[i].length)] #MATRICE DI ADIACENZE RIGHE = LAYER 0, CLN = LAYER 1
-        return 
-    
-    def feedfw(self,x):
-        self.layers[0].O = x
-        for i in range(self.length-1):
-            for j in range(self.layers[i+1].length):
-                self.layers[i+1].I[j] = np.dot(self.layers[i].O,np.transpose(self.layers[i].weights)[j]) + self.layers[i+1].b[j]
-                self.layers[i+1].O[j] = sigmoid(self.layers[i+1].I[j])
-                
-    def totError(self,x,y):
         self.feedfw(x)
         Error = sum(np.square(np.subtract(y,self.layers[-1].O)))/(self.layers[-1].length*2)
         print(Error)
