@@ -44,9 +44,6 @@ class NeuralNet():
         for layer in self.layers:
             print(layer.O)
             print(layer.weights,"\n")
-
-        Error = sum(np.square(np.subtract(y,self.layers[-1].O)))/(self.layers[-1].length*2)
-        print(Error)
         
     def backpropagation(self,x,y,lr):
         self.feedfw(x)
